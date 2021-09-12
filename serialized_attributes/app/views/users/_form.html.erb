@@ -1,0 +1,30 @@
+<%= form_with(model: user) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+      <%= form.text_field :name %>
+      <%= form.fields_for :properties do |p| %>
+
+      <%= p.label :twitter_handler %>
+        <%= p.text_field :twitter_handle, input_html: {value: @user.properties[:twitter_handle]} %>
+
+      <%= p.label :github_handler %>
+        <%= p.text_field :github_username, input_html: { value: @user.properties[:github_username] } %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
