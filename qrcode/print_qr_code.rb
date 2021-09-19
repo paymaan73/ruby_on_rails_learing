@@ -8,6 +8,7 @@ class QRGeneratorPdf
     @qr_data    = qr_data
     @text       = text
     @file_name  = file_name
+    @size       = size
   end
 
   def call
@@ -19,9 +20,10 @@ class QRGeneratorPdf
     Prawn::Document::new do
       text @text, align: :center
       move_down 15
-      render_qr_code(@qr_data, dot: @size, align: :center)
-      render_file("#{@file_name.to_s}.pdf")
+      render_qr_code(qrcode, dot: 12, align: :center)
+      render_file("qr.pdf")
     end
+
   end
 
   def self.call(qr_data:, text:, size:, file_name:)
@@ -31,4 +33,4 @@ class QRGeneratorPdf
 end
 
 
-QRGeneratorPdf.call('https://www.google.com', 'My Url For Test', 12, 'qr1').call
+QRGeneratorPdf.call(qr_data: 'https://www.google.com', text: 'My Url For Test', size: 12, file_name: 'payman')
